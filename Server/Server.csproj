@@ -51,5 +51,15 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BazaPodataka\BazaPodataka.csproj">
+      <Project>{31632EC0-7CE4-4FE3-994C-5B8CEE1C51FB}</Project>
+      <Name>BazaPodataka</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{74A5B03F-BB8A-4BF0-B296-8773C6149650}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

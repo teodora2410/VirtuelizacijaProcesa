@@ -5,7 +5,7 @@ namespace BazaPodataka
 {
     public static class Baza
     {
-        public static IBaza CreateDatabase(TipBaze tipBaze)
+        public static IBaza BazaPodataka(TipBaze tipBaze)
         {
             switch (tipBaze)
             {
