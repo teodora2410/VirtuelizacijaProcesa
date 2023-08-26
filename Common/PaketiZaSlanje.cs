@@ -47,7 +47,7 @@ namespace Common
             catch (System.Exception)
             {
                 Console.WriteLine("Neuspesno ciscenje!");
-            };
+            }
         }
     }
 }
