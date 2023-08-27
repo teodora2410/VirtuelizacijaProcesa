@@ -15,8 +15,7 @@ namespace Server
     public class Servis : ILoad
     {
         private IBaza baza;
-        private static int ForecastFileId = -1;
-        private static int MeasuredFileId = -1;
+        private int fileId = -1;
         private int redUCsv = 1;
         private int ukupanBrojRedova = 0;
         private bool bazaPodataka = false;
@@ -34,7 +33,6 @@ namespace Server
 
             // Provera tipa datoteke
             var tipFile = GetTipLoada(paket.FileName);
-            UvecajIdTipa(tipFile);
 
             string text = ProcitajText(paket);
 
@@ -69,22 +67,16 @@ namespace Server
 
         public TipLoada GetTipLoada(string imeFile)
         {
-            return imeFile.StartsWith("forecast") ? TipLoada.Forecast
-                          : imeFile.StartsWith("measured") ? TipLoada.Measured
-                          : throw new FormatException("Nepoznat tip loada.");
+            if (imeFile.StartsWith("forecast"))
+                return TipLoada.Forecast;
+            if (imeFile.StartsWith("measured"))
+            {
+                fileId++;
+                return TipLoada.Measured;
+            } 
+             throw new FormatException("Nepoznat tip loada.");
         }
 
-        private void UvecajIdTipa(TipLoada tipFile)
-        {
-            if (tipFile == TipLoada.Forecast)
-            {
-                ForecastFileId++;
-            }
-            else if (tipFile == TipLoada.Measured)
-            {
-                MeasuredFileId++;
-            }
-        }
 
         public string ProcitajText(PaketiZaSlanje paket)
         {
@@ -165,14 +157,14 @@ namespace Server
             if (tipLoada == TipLoada.Forecast)
             {
                 load.ForecastValue = potrosnja;
-                load.ForecastFileId = ForecastFileId;
             }
             else if (tipLoada == TipLoada.Measured)
             {
                 load.MeasuredValue = potrosnja;
-                load.MeasuredFileId = MeasuredFileId;
+                load.ImportedFileId = fileId;
             }
-
+            if(load.ImportedFileId != -1)
+                
 
             baza.AzurirajLoad(load);
         }
@@ -200,6 +192,7 @@ namespace Server
         public void NoviImportedFile(string fileName, IBaza bazapodataka)
         {
             var importedFile = new ImportedFile { FileName = fileName };
+            
             bazapodataka.DodajImportedFile(importedFile);
         }
     }
