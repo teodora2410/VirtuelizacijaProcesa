@@ -163,9 +163,7 @@ namespace Server
                 load.MeasuredValue = potrosnja;
                 load.ImportedFileId = fileId;
             }
-            if(load.ImportedFileId != -1)
-                
-
+            
             baza.AzurirajLoad(load);
         }
 
